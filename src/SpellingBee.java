@@ -28,8 +28,11 @@ import java.util.Scanner;
  *
  * DO NOT MODIFY MAIN OR ANY OF THE METHOD HEADERS.
  */
-public class SpellingBee {
 
+// SOPHIE HO 3/19/23
+// GENERATE, SORT, AND CHECK WORDS METHODS CODED BY SOPHIE HO
+// The recursive methods used in the above methods coded by Sophie HO
+public class SpellingBee {
     private String letters;
     private ArrayList<String> words;
     public static final int DICTIONARY_SIZE = 143091;
@@ -40,13 +43,13 @@ public class SpellingBee {
         words = new ArrayList<String>();
     }
 
-    // TODO: generate all possible substrings and permutations of the letters.
-    //  Store them all in the ArrayList words. Do this by calling ANOTHER method
-    //  that will find the substrings recursively.
+    // Generates all possible substrings and permutations of the letters.
+    // Stores them all in the ArrayList words by calling the method makeWords
     public void generate() {
         makeWords("", letters);
     }
 
+    // A recursive method that finds the substrings of letters recursively.
     public void makeWords(String possibles, String originals)
     {
         if (originals.length() == 0)
@@ -62,13 +65,14 @@ public class SpellingBee {
         }
     }
 
-    // TODO: Apply mergesort to sort all words. Do this by calling ANOTHER method
-    //  that will find the substrings recursively.
+    // Applies mergesort to sort all words by calling the recursive method mergeSort
     public void sort()
     {
         mergeSort(words, 0, words.size());
     }
 
+    // Mergesorts the words recursively by continuously splitting up the ArrayList until it reaches the smallest case
+    // Then compares them and merges them together using the recursive method merge()
     public ArrayList<String> mergeSort(ArrayList<String> arr, int low, int high)
     {
         if (high - low == 0) {
@@ -82,9 +86,9 @@ public class SpellingBee {
         ArrayList<String> arr2 = new ArrayList<String>();
         arr2 = mergeSort(arr, med + 1, high);
         merge(arr1, arr2);
-
     }
 
+    // Recursively merges the two arraylists together in order of String size
     public void merge(ArrayList<String> arr1, ArrayList<String> arr2)
     {
         ArrayList<String> merged = new ArrayList<String>();
@@ -112,7 +116,6 @@ public class SpellingBee {
         }
     }
 
-
     // Removes duplicates from the sorted list.
     public void removeDuplicates() {
         int i = 0;
@@ -125,11 +128,12 @@ public class SpellingBee {
         }
     }
 
-    // TODO: For each word in words, use binary search to see if it is in the dictionary.
-    //  If it is not in the dictionary, remove it from words.
+    // For each word in words, checkWord uses binary search to see if it is in the dictionary.
+    // Calls method found that calls a recursive binary search method
     public void checkWords() {
         for (int i = 0; i < words.size(); i++)
         {
+            // If the word is not in the dictionary, remove it from words.
             if(!found(words.get(i)))
             {
                 words.remove(i);
@@ -142,6 +146,7 @@ public class SpellingBee {
         return search(n, DICTIONARY, 0, DICTIONARY_SIZE - 1);
     }
 
+    // Uses binary search to search for a given target string
     public boolean search(String target, String[] DICTIONARY, int low, int high)
     {
         if (low > high)
