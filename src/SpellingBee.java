@@ -59,7 +59,7 @@ public class SpellingBee {
         }
         words.add(possibles);
         for (int i = 0; i < originals.length(); i++) {
-            String newPossible = possibles.substring(0, i);
+            String newPossible = possibles + originals.substring(i, i + 1);
             String newOriginals = originals.substring(0, i) + originals.substring(i + 1);
             makeWords(newPossible, newOriginals);
         }
@@ -68,7 +68,7 @@ public class SpellingBee {
     // Applies mergesort to sort all words by calling the recursive method mergeSort
     public void sort()
     {
-        mergeSort(words, 0, words.size());
+        words = mergeSort(words, 0, words.size() - 1);
     }
 
     // Mergesorts the words recursively by continuously splitting up the ArrayList until it reaches the smallest case
@@ -85,11 +85,11 @@ public class SpellingBee {
         arr1 = mergeSort(arr, low, med);
         ArrayList<String> arr2 = new ArrayList<String>();
         arr2 = mergeSort(arr, med + 1, high);
-        merge(arr1, arr2);
+        return merge(arr1, arr2);
     }
 
     // Recursively merges the two arraylists together in order of String size
-    public void merge(ArrayList<String> arr1, ArrayList<String> arr2)
+    public ArrayList<String> merge(ArrayList<String> arr1, ArrayList<String> arr2)
     {
         ArrayList<String> merged = new ArrayList<String>();
         int i = 0, j = 0;
@@ -114,6 +114,7 @@ public class SpellingBee {
             merged.add(i + j, arr1.get(i));
             i++;
         }
+        return merged;
     }
 
     // Removes duplicates from the sorted list.
@@ -143,18 +144,18 @@ public class SpellingBee {
     }
 
     public boolean found(String n) {
-        return search(n, DICTIONARY, 0, DICTIONARY_SIZE - 1);
+        return search(n, 0, DICTIONARY_SIZE - 1);
     }
 
     // Uses binary search to search for a given target string
-    public boolean search(String target, String[] DICTIONARY, int low, int high)
+    public boolean search(String target,  int low, int high)
     {
         if (low > high)
         {
             return false;
         }
         int med = (high + low) / 2;
-        if (DICTIONARY[med] == target)
+        if (DICTIONARY[med].equals(target))
         {
             return true;
         }
@@ -166,7 +167,7 @@ public class SpellingBee {
         {
             high = med - 1;
         }
-        return search(target, DICTIONARY, low, high);
+        return search(target, low, high);
     }
 
     // Prints all valid words to wordList.txt
